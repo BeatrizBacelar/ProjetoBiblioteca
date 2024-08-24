@@ -1,3 +1,5 @@
+import { Exemplar } from "./Exemplar";
+
 export class Livro {
   codigo: string;
   titulo: string;
@@ -5,6 +7,7 @@ export class Livro {
   autores: string[];
   edicao: number;
   anoPublicacao: number;
+  meusExemplares: Exemplar[];
 
   constructor(
     codigo: string,

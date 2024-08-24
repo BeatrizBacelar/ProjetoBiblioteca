@@ -1,4 +1,6 @@
-export class AlunoGraduacao {
+import { Usuario } from "./Usuario";
+
+export class AlunoGraduacao extends Usuario {
   codigoIdentificacao: string;
   nome: string;
   tempoEmprestimo: number = 3;
@@ -8,6 +10,7 @@ export class AlunoGraduacao {
     codigoIdentificacao: string,
     nome: string,
   ) {
+    super();
     this.codigoIdentificacao = codigoIdentificacao;
     this.nome = nome;
   }

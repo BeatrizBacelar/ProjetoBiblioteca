@@ -1,4 +1,5 @@
 import {Livro} from './Livro';
+import {SistemaBiblioteca} from './SistemaBiblioteca';
 
 const livros: Livro[] = [
   new Livro(

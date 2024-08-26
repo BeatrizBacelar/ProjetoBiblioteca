@@ -1,28 +1,16 @@
 import { Exemplar } from "./Exemplar";
 
 export class Livro {
-  codigo: string;
-  titulo: string;
-  editora: string;
-  autores: string[];
-  edicao: number;
-  anoPublicacao: number;
-  meusExemplares: Exemplar[];
+  meusExemplares: Exemplar[] = [];
 
   constructor(
-    codigo: string,
-    titulo: string,
-    editora: string,
-    autores: string[],
-    edicao: number,
-    anoPublicacao: number
+    public codigo: string,
+    public titulo: string,
+    public editora: string,
+    public autores: string[],
+    public edicao: number,
+    public anoPublicacao: number
   ) {
-    this.codigo = codigo;
-    this.titulo = titulo;
-    this.editora = editora;
-    this.autores = autores;
-    this.edicao = edicao;
-    this.anoPublicacao = anoPublicacao;
+    this.meusExemplares = [];
   }
-
 }

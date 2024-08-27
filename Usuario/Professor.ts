@@ -1,4 +1,4 @@
-import { Usuario } from "./Usuario";
+
 
 class Professor extends Usuario {
     getLimiteEmprestimos(): number {

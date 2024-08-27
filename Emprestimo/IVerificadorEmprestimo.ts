@@ -1,4 +1,4 @@
-import { Usuario } from "../Usuario/Usuario";
+
 
 export interface IVerificadorEmprestimo {
 

@@ -1,5 +1,7 @@
+import { Exemplar } from './Exemplar';
 import {Livro} from './Livro';
 import {SistemaBiblioteca} from './SistemaBiblioteca';
+
 
 const livros: Livro[] = [
   new Livro(
@@ -70,5 +72,25 @@ const livros: Livro[] = [
   ),
 ];
 
+const exemplares: Exemplar[] = [
+  new Exemplar(1, Livro.encontrarLivroPorCodigo('100', livros), true),
+  new Exemplar(2, Livro.encontrarLivroPorCodigo('100', livros), true),
+  new Exemplar(3, Livro.encontrarLivroPorCodigo('101', livros), true),
+  new Exemplar(4, Livro.encontrarLivroPorCodigo('200', livros), true),
+  new Exemplar(5, Livro.encontrarLivroPorCodigo('201', livros), true),
+  new Exemplar(6, Livro.encontrarLivroPorCodigo('300', livros), true),
+  new Exemplar(7, Livro.encontrarLivroPorCodigo('300', livros), true),
+  new Exemplar(8, Livro.encontrarLivroPorCodigo('400', livros), true),
+  new Exemplar(9, Livro.encontrarLivroPorCodigo('400', livros), true)
+]
 
-livros.forEach((livro) => console.log(livro.titulo));
+exemplares.forEach(exemplar => {
+  const livro = exemplar.livro;
+  if (livro) {
+    livro.setExemplar(exemplar);
+  }
+});
+
+livros.forEach((livro) => {
+  console.log(`Livro: ${livro.codigo}, Exemplares: ${livro.meusExemplares.length}`);
+});

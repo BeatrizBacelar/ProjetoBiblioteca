@@ -1,6 +1,7 @@
 import { Emprestimo } from "./Emprestimo/Emprestimo";
 import { Livro } from "./Livro";
 import { Reserva } from "./Reserva";
+import { Usuario } from "./Usuario/Usuario";
 
 class Biblioteca {
     private emprestimos: Map<number, Emprestimo[]> = new Map();

@@ -1,6 +1,10 @@
 import { Exemplar } from './Exemplar';
 import {Livro} from './Livro';
 import {SistemaBiblioteca} from './SistemaBiblioteca';
+import { AlunoGraduacao } from './Usuario/AlunoGraduacao';
+import { AlunoPosGraduacao } from './Usuario/AlunoPosGraduacao';
+import { Professor } from './Usuario/Professor';
+import { Usuario } from './Usuario/Usuario';
 
 
 const livros: Livro[] = [
@@ -82,7 +86,14 @@ const exemplares: Exemplar[] = [
   new Exemplar(7, Livro.encontrarLivroPorCodigo('300', livros), true),
   new Exemplar(8, Livro.encontrarLivroPorCodigo('400', livros), true),
   new Exemplar(9, Livro.encontrarLivroPorCodigo('400', livros), true)
-]
+];
+
+const usuarios: Usuario[] = [
+  new AlunoGraduacao(123, 'Joao da Silva'),
+  new AlunoPosGraduacao(456, 'Luiz Fernando Rodrigues'),
+  new AlunoGraduacao(789, 'Pedro Paulo'),
+  new Professor(100, 'Carlos Lucena'),
+];
 
 exemplares.forEach(exemplar => {
   const livro = exemplar.livro;
@@ -94,3 +105,8 @@ exemplares.forEach(exemplar => {
 livros.forEach((livro) => {
   console.log(`Livro: ${livro.codigo}, Exemplares: ${livro.meusExemplares.length}`);
 });
+
+usuarios.forEach((user) => {
+  console.log(`Nome: ${user.nome}, Emprestimo: ${user.getLimiteEmprestimos()}`);
+});
+

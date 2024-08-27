@@ -1,6 +1,12 @@
+import { Usuario } from "./Usuario";
 
 
-class AlunoGraduacao extends Usuario {
+export class AlunoGraduacao extends Usuario {
+
+  constructor(codigo: number, nome: string) {
+    super(codigo, nome); 
+  }
+
     getLimiteEmprestimos(): number {
         return 3;
     }

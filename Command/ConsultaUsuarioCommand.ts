@@ -2,7 +2,7 @@ import { Command } from "./Command";
 
 export class ConsultaUsuarioCommand implements Command {
 
-  execute(): void {
+  execute(args: String[]): void {
     throw new Error("Method not implemented.");
   }
 

@@ -3,7 +3,9 @@ import { Usuario } from "./Usuario/Usuario";
 
 export class Reserva {
 
-  dataReserva: string;
+  dataReserva: Date;
   usuario: Usuario;
   livro: Livro;
+
+  constructor(dataReserva: Date, usuario: Usuario, livro: Livro) {}
 }

@@ -4,7 +4,7 @@ export class Livro {
   meusExemplares: Exemplar[] = [];
 
   constructor(
-    public codigo: string,
+    public codigo: number,
     public titulo: string,
     public editora: string,
     public autores: string[],
@@ -14,7 +14,7 @@ export class Livro {
     this.meusExemplares = [];
   }
 
-  static encontrarLivroPorCodigo(codigo: string, livros: Livro[]): Livro | undefined {
+  static encontrarLivroPorCodigo(codigo: number, livros: Livro[]): Livro | undefined {
     return livros.find(livro => livro.codigo === codigo);
   }
 

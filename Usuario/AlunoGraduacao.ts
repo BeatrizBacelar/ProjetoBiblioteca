@@ -1,7 +1,14 @@
-import { Aluno } from "../Aluno";
+import { Reserva } from "../Reserva";
+import { Usuario } from "./Usuario";
 
-export class AlunoGraduacao extends Aluno {
-    public getLimiteEmprestimos(): number {
+
+export class AlunoGraduacao extends Usuario {
+  minhasReservas: Reserva[] = [];
+  constructor(codigo: number, nome: string) {
+    super(codigo, nome); 
+  }
+
+    getLimiteEmprestimos(): number {
         return 3;
     }
 
@@ -11,4 +18,8 @@ export class AlunoGraduacao extends Aluno {
 	public novoEmprestimo(): void {
 		// Implementação do método
 	}
+
+    getMinhasReservas(): Reserva[] {
+      return this.minhasReservas;
+    }
 }

@@ -1,6 +1,8 @@
-import { Usuario } from "./Usuario";
+import { Aluno } from "../Aluno";
+import { Reserva } from "../Reserva";
 
-export class AlunoPosGraduacao extends Usuario {
+export class AlunoPosGraduacao extends Aluno {
+	minhasReservas: Reserva[];
     public getLimiteEmprestimos(): number {
         return 4;
     }
@@ -11,4 +13,8 @@ export class AlunoPosGraduacao extends Usuario {
 	public novoEmprestimo(): void {
 		// Implementação do método
 	}
+
+    getMinhasReservas(): Reserva[] {
+        return this.minhasReservas;
+    }
 }

@@ -27,4 +27,14 @@ export class Livro {
   public getExemplares(): Exemplar[] {
     return this.exemplares;
   }
+
+  static encontrarLivroPorCodigo(codigo: number, livros: Livro[]): Livro | undefined {
+    return livros.find(livro => livro.codigo === codigo.toString());
+  }
+
+  setExemplar(exemplar: Exemplar) {
+    this.exemplares.push(exemplar);
+  }
+  
+
 }

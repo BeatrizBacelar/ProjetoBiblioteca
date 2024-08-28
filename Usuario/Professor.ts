@@ -1,6 +1,7 @@
 import { Usuario } from "./Usuario";
 
-class Professor extends Usuario {
+export class Professor extends Usuario {
+	notificacao: string;
     getLimiteEmprestimos(): number {
         return Infinity; // Sem limite para professores
     }

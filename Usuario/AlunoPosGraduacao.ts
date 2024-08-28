@@ -1,11 +1,14 @@
 import { Usuario } from "./Usuario";
 
-class AlunoPosGraduacao extends Usuario {
-    getLimiteEmprestimos(): number {
+export class AlunoPosGraduacao extends Usuario {
+    public getLimiteEmprestimos(): number {
         return 4;
     }
 
-    getTempoEmprestimo(): number {
+    public getTempoEmprestimo(): number {
         return 5;
     }
+	public novoEmprestimo(): void {
+		// Implementação do método
+	}
 }

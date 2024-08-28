@@ -13,9 +13,9 @@ export class Biblioteca {
     private reservas: Map<number, Reserva[]> = new Map();
     commandManager = CommandSingleton.obterInstancia();
     private static instancia: Biblioteca;
-    livros: Livro[];
-    exemplares: Exemplar[];
-    usuarios: Usuario[];
+    livros: Livro[] = [];
+    exemplares: Exemplar[] = [];
+    usuarios: Usuario[] = [];
 
     public static obterInstancia(): Biblioteca {
         if (!this.instancia) {
@@ -25,7 +25,7 @@ export class Biblioteca {
         return this.instancia;
       }
     
-    encontrarUsuarioPorId(codigo: number) : Usuario | null{
+    encontrarUsuarioPorId(codigo: number) : Usuario | null {
         return this.usuarios.find(usuario => usuario.codigo === codigo) || null;
     }
 
@@ -80,16 +80,14 @@ export class Biblioteca {
 
     // Outros métodos para reserva, devolução, etc.
     reservar(codigo: number, codigoLivro: number): string | undefined {
-        // Obtém as reservas do usuário
         const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo);
         const livro: Livro | undefined = this.encontrarLivroPorId(codigoLivro);
-
         if (usuario && livro) {
             const reservasDoUsuario = this.reservas.get(usuario.codigo) || [];
             
         // Verifica se o usuário já reservou 3 livros (colocar em command)
-        if (reservasDoUsuario.length >= 3) {
-            return `Reserva falhou: O usuário ${usuario.nome} já possui 3 livros reservados.`;
+            if (reservasDoUsuario.length >= 3) {
+                return `Reserva falhou: O usuário ${usuario.nome} já possui 3 livros reservados.`;
             }
     
             // Verifica se o livro já foi reservado pelo usuário (colocar em command)
@@ -100,6 +98,7 @@ export class Biblioteca {
     
             // Registra a nova reserva
             const novaReserva = new Reserva(new Date, usuario, livro);
+            console.log(novaReserva)
             reservasDoUsuario.push(novaReserva);
             this.reservas.set(usuario.codigo, reservasDoUsuario);
     

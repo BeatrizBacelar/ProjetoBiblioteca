@@ -7,7 +7,7 @@ export class CommandSingleton {
   private static instancia: CommandSingleton;
   private commandMap: Map<string, Command>;
 
-  private constructor() {
+  constructor() {
       // Inicializa o mapa com os comandos disponíveis
       this.commandMap = new Map<string, Command>();
       this.commandMap.set('res', new ReservaCommand());

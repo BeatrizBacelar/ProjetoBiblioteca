@@ -26,11 +26,11 @@ export class Biblioteca {
       }
     
     encontrarUsuarioPorId(codigo: number) : Usuario | null {
-        return this.usuarios.find(usuario => usuario.codigo === codigo) || null;
+        return this.usuarios.find(usuario => usuario.getCodigo() === codigo) || null;
     }
 
     encontrarLivroPorId(codigo: number) : Livro | undefined {
-        return this.livros.find(livro => livro.codigo === codigo)
+        return this.livros.find(livro => livro.getCodigo() === codigo)
     }
 
     instanciaDados() {
@@ -46,15 +46,15 @@ export class Biblioteca {
           ];
           
           this.exemplares  = [
-            new Exemplar(1, Livro.encontrarLivroPorCodigo(100, this.livros), true),
-            new Exemplar(2, Livro.encontrarLivroPorCodigo(100, this.livros), true),
-            new Exemplar(3, Livro.encontrarLivroPorCodigo(101, this.livros), true),
-            new Exemplar(4, Livro.encontrarLivroPorCodigo(200, this.livros), true),
-            new Exemplar(5, Livro.encontrarLivroPorCodigo(201, this.livros), true),
-            new Exemplar(6, Livro.encontrarLivroPorCodigo(300, this.livros), true),
-            new Exemplar(7, Livro.encontrarLivroPorCodigo(300, this.livros), true),
-            new Exemplar(8, Livro.encontrarLivroPorCodigo(400, this.livros), true),
-            new Exemplar(9, Livro.encontrarLivroPorCodigo(400, this.livros), true)
+            new Exemplar(1, 100, 'disponivel'),
+            new Exemplar(2, 100, 'disponivel',),
+            new Exemplar(3, 101, 'disponivel',),
+            new Exemplar(4, 200, 'disponivel',),
+            new Exemplar(5, 201, 'disponivel',),
+            new Exemplar(6, 300, 'disponivel',),
+            new Exemplar(7, 300, 'disponivel',),
+            new Exemplar(8, 400, 'disponivel',),
+            new Exemplar(9, 400, 'disponivel',)
           ];
           
           this.usuarios = [
@@ -65,7 +65,7 @@ export class Biblioteca {
           ];
           
           this.exemplares.forEach(exemplar => {
-            const livro = exemplar.livro;
+            const livro = this.encontrarLivroPorId(exemplar.getIdCodigoLivro());
             if (livro) {
               livro.setExemplar(exemplar);
             }
@@ -75,7 +75,7 @@ export class Biblioteca {
     // Emprestar livro
     emprestar(usuario: Usuario, livro: Livro): string {
         // Aplicar regras de negócio específicas aqui, usando polimorfismo
-        return `${usuario.nome} emprestou ${livro.titulo}`;
+        return `${usuario.getNome()} emprestou ${livro.getTitulo()}`;
     }
 
     // Outros métodos para reserva, devolução, etc.
@@ -83,27 +83,27 @@ export class Biblioteca {
         const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo);
         const livro: Livro | undefined = this.encontrarLivroPorId(codigoLivro);
         if (usuario && livro) {
-            const reservasDoUsuario = this.reservas.get(usuario.codigo) || [];
+            const reservasDoUsuario = this.reservas.get(usuario.getCodigo()) || [];
             
         // Verifica se o usuário já reservou 3 livros (colocar em command)
             if (reservasDoUsuario.length >= 3) {
-                return `Reserva falhou: O usuário ${usuario.nome} já possui 3 livros reservados.`;
+                return `Reserva falhou: O usuário ${usuario.getNome()} já possui 3 livros reservados.`;
             }
     
             // Verifica se o livro já foi reservado pelo usuário (colocar em command)
-            const reservaExistente = reservasDoUsuario.find(reserva => reserva.livro.codigo === livro.codigo);
+            const reservaExistente = reservasDoUsuario.find(reserva => reserva.getcodigoLivro() === livro.getCodigo());
             if (reservaExistente) {
-            return `Reserva falhou: O usuário ${usuario.nome} já reservou o livro "${livro.titulo}".`;
+            return `Reserva falhou: O usuário ${usuario.getNome()} já reservou o livro "${livro.getTitulo()}".`;
             }
     
             // Registra a nova reserva
-            const novaReserva = new Reserva(new Date, usuario, livro);
+            const novaReserva = new Reserva(livro.getCodigo(), usuario.getCodigo(), new Date,);
             console.log(novaReserva)
             reservasDoUsuario.push(novaReserva);
-            this.reservas.set(usuario.codigo, reservasDoUsuario);
+            this.reservas.set(usuario.getCodigo(), reservasDoUsuario);
     
             //(colocar em command)
-            return `Reserva bem-sucedida: O usuário ${usuario.nome} reservou o livro "${livro.titulo}".`;
+            return `Reserva bem-sucedida: O usuário ${usuario.getNome()} reservou o livro "${livro.getTitulo()}".`;
         }
     }
 

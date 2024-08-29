@@ -2,7 +2,7 @@ import { Aluno } from "./Aluno";
 import { Reserva } from "../Reserva";
 
 export class AlunoPosGraduacao extends Aluno {
-  minhasReservas: Reserva[];
+  minhasReservas: Reserva[] = [];
   public getLimiteEmprestimos(): number {
     return 4;
   }

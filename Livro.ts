@@ -5,10 +5,10 @@ import { Usuario } from "./Usuario/Usuario";
 export class Livro {
   private exemplares: Exemplar[];
   private reservas: Reserva[];
-  private observadores: Usuario[];
+  private observadores: Usuario[] = [];
 
   constructor(
-    private codigo: string,
+    private codigo: number,
     private titulo: string,
     private editora: string,
     private autores: string[],
@@ -21,6 +21,9 @@ export class Livro {
   public getTitulo(): string {
     return this.titulo;
   }
+  public getCodigo(): number {
+    return this.codigo;
+  }
   public getReservas(): Reserva[] {
     return this.reservas;
   }
@@ -29,7 +32,7 @@ export class Livro {
   }
 
   static encontrarLivroPorCodigo(codigo: number, livros: Livro[]): Livro | undefined {
-    return livros.find(livro => livro.codigo === codigo.toString());
+    return livros.find(livro => livro.getCodigo() === codigo);
   }
 
   setExemplar(exemplar: Exemplar) {

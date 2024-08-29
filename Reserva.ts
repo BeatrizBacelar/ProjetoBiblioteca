@@ -2,10 +2,10 @@
 
 export class Reserva {
 	constructor(
-		private idReserva: number,
-		private codigoLivro: number,
+    private codigoLivro: number,
 		private codigoUsuario: number,
 		private dateSolicitacao: Date,
+		private idReserva?: number | null,
 	){}
 	public getcodigoUsuario(): number {
 		return this.codigoUsuario;

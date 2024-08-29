@@ -1,21 +1,20 @@
+import { Aluno } from "./Aluno";
 import { Reserva } from "../Reserva";
-import { Usuario } from "./Usuario";
 
-export class AlunoPosGraduacao extends Usuario {
-    minhasReservas: Reserva[] = [];
-    constructor(codigo: number, nome: string) {
-        super(codigo, nome); 
-    }
+export class AlunoPosGraduacao extends Aluno {
+  minhasReservas: Reserva[];
+  public getLimiteEmprestimos(): number {
+    return 4;
+  }
 
-    getLimiteEmprestimos(): number {
-        return 4;
-    }
+  public getTempoEmprestimo(): number {
+    return 5;
+  }
+  public novoEmprestimo(): void {
+    // Implementação do método
+  }
 
-    getTempoEmprestimo(): number {
-        return 5;
-    }
-
-    getMinhasReservas(): Reserva[] {
-        return this.minhasReservas;
-    }
+  getMinhasReservas(): Reserva[] {
+    return this.minhasReservas;
+  }
 }

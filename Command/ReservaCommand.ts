@@ -3,7 +3,7 @@ import { Command } from "./Command";
 
 export class ReservaCommand implements Command {
   
-  execute(args: String[]): void {
+  execute(args: string[]): void {
     if (args.length < 2) {
       console.log("Insucesso! Argumentos Faltando!");
       return;

@@ -1,5 +1,5 @@
 export interface Command {
 
-	execute(args: String[]): void;
+	execute(args: string[]): void;
 
 }

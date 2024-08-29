@@ -12,9 +12,12 @@ export class AlunoGraduacao extends Usuario {
         return 3;
     }
 
-    getTempoEmprestimo(): number {
+    public getTempoEmprestimo(): number {
         return 3;
     }
+	public novoEmprestimo(): void {
+		// Implementação do método
+	}
 
     getMinhasReservas(): Reserva[] {
       return this.minhasReservas;

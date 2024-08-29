@@ -48,6 +48,19 @@ export class Livro {
     return this.exemplares.find(ex => ex.getIdCodigoLivro() === codigoLivro && ex.getStatus() === 'disponivel');
   }
 
+  public getUsersReserva() {
+    this.reservas.forEach(res => console.log(`Reserva: ${res.getId()} Usuário: ${res.getcodigoUsuario()} \n`))
+  }
+
+  public getInfoExemplar() {
+    this.exemplares.forEach(ex => console.log(`Codigo Exemplar: ${ex.getCodigo()} Status: ${ex.getStatus()} \n`))
+  }
+
+  public getInfoLivro() {
+    console.log(`Titulo: ${this.titulo} \n Qte reservas: ${this.reservas.length} \n
+    ${this.getUsersReserva()} ${this.getInfoExemplar()} `)
+  }
+
   
 
 }

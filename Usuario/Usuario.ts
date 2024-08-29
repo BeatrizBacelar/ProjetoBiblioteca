@@ -39,5 +39,15 @@ export class Usuario {
         this.minhasReservas.filter(res => res.getId() === idReserva);
     }
 
+    getInfoEmprestimo() {
+        this.emprestimos.forEach(emp => console.log(`Titulo: ${emp.getCodigoLivro()} Data: ${emp.getDataEmprestimo()} Status: ${emp.getStatus()} Devolucao: ${emp.getDataDevolucao()} \n`))
+    }
 
+    getInfoReservas() {
+        this.minhasReservas.forEach(res => console.log(`Titulo Reservado: ${res.getCodigoLivro()} Data: ${res.getDateSolicitacao()} \n`))
+    }
+
+    public getInfoUsuario() {
+        console.log(`Emprestimos: ${this.getInfoEmprestimo()} \n Reservas: ${this.getInfoReservas()} `)
+    }
 }

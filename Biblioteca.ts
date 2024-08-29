@@ -72,6 +72,16 @@ export class Biblioteca {
           });
     }
 
+    consultarUsuario(codigo: number){
+        const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo); 
+        usuario?.getInfoUsuario();
+    }
+
+    consultarLivro(codigo: number){
+        const livro: Livro | undefined = this.encontrarLivroPorId(codigo);  
+        livro?.getInfoLivro();
+    }
+
     // Emprestar livro
     emprestar(codigo: number, codigoLivro: number): any {
         const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo);
@@ -81,6 +91,8 @@ export class Biblioteca {
             return 'Usuário ou livro não encontrado.';
         }
 
+        if (livro.getExemplar(codigoLivro)){
+            
         console.log(usuario, livro, usuario.getReservaById(codigoLivro))
 
         if (usuario.getReservaById(codigoLivro)?.getCodigoExemplar()){
@@ -130,6 +142,12 @@ export class Biblioteca {
         console.log(usuario.listarEmprestimos())
 
         console.log(`Empréstimo realizado com sucesso: ${usuario.getNome()} pegou "${livro.getTitulo()}"`);
+        return;
+        }
+
+        console.log(`Não há exemplares de: "${livro.getTitulo()}" na biblioteca`);
+
+
 
         // Verificar se o empréstimo pode ser feito
         // const mensagemErro = usuario.podeEmprestar(livro);

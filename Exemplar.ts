@@ -20,4 +20,7 @@ export class Exemplar {
   public setIdEmprestimo(idEmprestimo: number): void {
     this.idEmprestimo = idEmprestimo;
   }
+  public setStatus(status: string) {
+    this.status = status;
+  }
 }

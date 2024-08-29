@@ -8,6 +8,5 @@ import { CommandSingleton } from "./Command/CommandSingleton";
     });
 
     rl.on('line', (entrada: string) => {
-       
         myCommand.lerComando(entrada);
     });

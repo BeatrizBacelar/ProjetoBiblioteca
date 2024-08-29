@@ -106,7 +106,30 @@ export class Biblioteca {
         console.log(usuario.listarEmprestimos())
 
         console.log(`Empréstimo realizado com sucesso: ${usuario.getNome()} pegou "${livro.getTitulo()}"`);
+        return;
         }
+
+        console.log('ENTREI SEM RESERVA')
+        // Registrar o empréstimo
+        const dataAtual = new Date();
+        const idExemplar = livro.getExemplar(codigoLivro);
+
+        // Cria uma nova data adicionando os dias de empréstimo
+        const dataDevolucao = new Date(dataAtual.getTime() + usuario.getTempoEmprestimo() * 24 * 60 * 60 * 1000);
+        const emprestimo: Emprestimo = new Emprestimo(
+            codigoLivro,
+            idExemplar,
+            usuario.getCodigo(),
+            dataAtual,
+            dataDevolucao,
+            'realizado'
+        );
+        livro.registrarEmprestimo(idExemplar);
+        usuario.adicionarEmprestimo(emprestimo);
+
+        console.log(usuario.listarEmprestimos())
+
+        console.log(`Empréstimo realizado com sucesso: ${usuario.getNome()} pegou "${livro.getTitulo()}"`);
 
         // Verificar se o empréstimo pode ser feito
         // const mensagemErro = usuario.podeEmprestar(livro);

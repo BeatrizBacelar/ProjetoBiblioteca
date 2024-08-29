@@ -44,6 +44,7 @@ export class Livro {
   }
 
   public getExemplar(codigoLivro: number): any {
+    console.log(this.exemplares)
     return this.exemplares.find(ex => ex.getIdCodigoLivro() === codigoLivro && ex.getStatus() === 'disponivel');
   }
 

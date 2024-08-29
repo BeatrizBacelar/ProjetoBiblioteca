@@ -31,6 +31,10 @@ export class Livro {
     return this.exemplares;
   }
 
+  public registrarEmprestimo(codigoExemplar: number | any) {
+    this.exemplares.filter(exemplar => exemplar.getCodigo() !== codigoExemplar);
+  }
+
   static encontrarLivroPorCodigo(codigo: number, livros: Livro[]): Livro | undefined {
     return livros.find(livro => livro.getCodigo() === codigo);
   }
@@ -38,6 +42,11 @@ export class Livro {
   setExemplar(exemplar: Exemplar) {
     this.exemplares.push(exemplar);
   }
+
+  public getExemplar(codigoLivro: number): any {
+    return this.exemplares.find(ex => ex.getIdCodigoLivro() === codigoLivro && ex.getStatus() === 'disponivel');
+  }
+
   
 
 }

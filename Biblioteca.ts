@@ -73,9 +73,52 @@ export class Biblioteca {
     }
 
     // Emprestar livro
-    emprestar(usuario: Usuario, livro: Livro): string {
-        // Aplicar regras de negócio específicas aqui, usando polimorfismo
-        return `${usuario.getNome()} emprestou ${livro.getTitulo()}`;
+    emprestar(codigo: number, codigoLivro: number): any {
+        const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo);
+        const livro: Livro | undefined = this.encontrarLivroPorId(codigoLivro);      
+
+        if (!usuario || !livro) {
+            return 'Usuário ou livro não encontrado.';
+        }
+
+        console.log(usuario, livro, usuario.getReservaById(codigoLivro))
+
+        if (usuario.getReservaById(codigoLivro)?.getCodigoExemplar()){
+            console.log('ENTREI')
+        // Registrar o empréstimo
+        const dataAtual = new Date();
+        const idExemplar = usuario.getReservaById(codigoLivro)?.getCodigoExemplar();
+
+        // Cria uma nova data adicionando os dias de empréstimo
+        const dataDevolucao = new Date(dataAtual.getTime() + usuario.getTempoEmprestimo() * 24 * 60 * 60 * 1000);
+        const emprestimo: Emprestimo = new Emprestimo(
+            codigoLivro,
+            idExemplar,
+            usuario.getCodigo(),
+            dataAtual,
+            dataDevolucao,
+            'realizado'
+        );
+        livro.registrarEmprestimo(idExemplar);
+        usuario.removeReserva(usuario.getReservaById(codigoLivro)?.getId())
+        usuario.adicionarEmprestimo(emprestimo);
+
+        console.log(usuario.listarEmprestimos())
+
+        console.log(`Empréstimo realizado com sucesso: ${usuario.getNome()} pegou "${livro.getTitulo()}"`);
+        }
+
+        // Verificar se o empréstimo pode ser feito
+        // const mensagemErro = usuario.podeEmprestar(livro);
+
+        // if (mensagemErro) {
+        //     return `Erro ao realizar o empréstimo: ${mensagemErro}`;
+        // }
+
+        // Verificar se há reserva e removê-la
+        // usuario.removerReserva(codigoLivro);
+
+      
     }
 
     // Outros métodos para reserva, devolução, etc.
@@ -91,19 +134,24 @@ export class Biblioteca {
             }
     
             // Verifica se o livro já foi reservado pelo usuário (colocar em command)
-            const reservaExistente = reservasDoUsuario.find(reserva => reserva.getcodigoLivro() === livro.getCodigo());
+            const reservaExistente = reservasDoUsuario.find(reserva => reserva.getCodigoLivro() === livro.getCodigo());
             if (reservaExistente) {
             return `Reserva falhou: O usuário ${usuario.getNome()} já reservou o livro "${livro.getTitulo()}".`;
             }
-    
-            // Registra a nova reserva
-            const novaReserva = new Reserva(livro.getCodigo(), usuario.getCodigo(), new Date,);
-            console.log(novaReserva)
-            reservasDoUsuario.push(novaReserva);
-            this.reservas.set(usuario.getCodigo(), reservasDoUsuario);
-    
-            //(colocar em command)
-            return `Reserva bem-sucedida: O usuário ${usuario.getNome()} reservou o livro "${livro.getTitulo()}".`;
+
+             
+            if (livro.getExemplar(codigoLivro)?.getCodigo()) {
+                // Registra a nova reserva
+                const novaReserva = new Reserva(livro.getExemplar(codigoLivro).getCodigo(), livro.getCodigo(), usuario.getCodigo(), new Date,);
+                console.log(novaReserva)
+                reservasDoUsuario.push(novaReserva);
+                usuario.adicionarReserva(novaReserva);
+                this.reservas.set(usuario.getCodigo(), reservasDoUsuario);
+
+                //(colocar em command)
+                return `Reserva bem-sucedida: O usuário ${usuario.getNome()} reservou o livro "${livro.getTitulo()}".`;
+            }
+           
         }
     }
 

@@ -1,8 +1,9 @@
 export class Exemplar {
   constructor(
     private codigo: number,
+    private codigoLivro: number,
     private status: string,
-    private idEmprestimo: string
+    private idEmprestimo?: number | null
   ) {}
   public getCodigo(): number {
     return this.codigo;
@@ -10,10 +11,16 @@ export class Exemplar {
   public getStatus(): string {
     return this.status;
   }
-  public getIdEmprestimo(): string {
+  public getIdEmprestimo(): number | undefined | null {
     return this.idEmprestimo;
   }
-  public setIdEmprestimo(idEmprestimo: string): void {
+  public getIdCodigoLivro(): number {
+    return this.codigoLivro;
+  }
+  public setIdEmprestimo(idEmprestimo: number): void {
     this.idEmprestimo = idEmprestimo;
+  }
+  public setStatus(status: string) {
+    this.status = status;
   }
 }

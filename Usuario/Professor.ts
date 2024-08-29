@@ -1,8 +1,8 @@
 import { Usuario } from "./Usuario";
 
 export class Professor extends Usuario {
-	private notificacao: number;
-    public getNotificacao(): number {
+	private notificacao?: number | null;
+    public getNotificacao(): number | null | undefined{
 		return this.notificacao;
 	}
     public novaNotificacao(notificacao: number): void {

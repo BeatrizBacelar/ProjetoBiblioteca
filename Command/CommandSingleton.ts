@@ -1,4 +1,6 @@
 import { Command } from "./Command";
+import { ConsultaLivroCommand } from "./ConsultaLivroCommand";
+import { ConsultaUsuarioCommand } from "./ConsultaUsuarioCommand";
 import { DevolucaoCommand } from "./DevolucaoCommand";
 import { EmprestimoCommand } from "./EmprestimoCommand";
 import { ReservaCommand } from "./ReservaCommand";
@@ -13,6 +15,8 @@ export class CommandSingleton {
       this.commandMap.set('res', new ReservaCommand());
       this.commandMap.set('emp', new EmprestimoCommand());
       this.commandMap.set('dev', new DevolucaoCommand());
+      this.commandMap.set('liv', new ConsultaLivroCommand());
+      this.commandMap.set('usu', new ConsultaUsuarioCommand());
       // this.commandMap.set('obs', new DevolucaoCommand());
   }
 

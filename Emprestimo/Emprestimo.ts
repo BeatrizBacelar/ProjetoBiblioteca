@@ -1,14 +1,19 @@
 export class Emprestimo {
+	private static contadorIdEmprestimo = 0;
 	constructor(
-		private idEmprestimo: number,
 		private codigoLivro: number,
-		private codigoExemplar: number,
+		private codigoExemplar: number | any,
 		private codigoUsuario: number,
 		private dataEmprestimo: Date,
 		private dataDevolucao: Date,
-		private status: string	
-
-	){}
+		private status: string,
+		private idEmprestimo?: number,
+	){
+		this.idEmprestimo = Emprestimo.gerarIdEmprestimo();
+	}
+	private static gerarIdEmprestimo(): number {
+    return ++this.contadorIdEmprestimo;
+  }
 	public getCodigoLivro(): number {
 		return this.codigoLivro;
 	}

@@ -2,7 +2,7 @@ import { Reserva } from "../Reserva";
 import { Usuario } from "./Usuario";
 
 export class Aluno extends Usuario {
-  private listaReservas: Array<Reserva>;
+  private listaReservas: Array<Reserva> = [];
 
   public listarReservas(): Array<Reserva> {
     return this.listaReservas;

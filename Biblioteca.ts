@@ -126,7 +126,6 @@ export class Biblioteca {
         console.log(usuario, livro, usuario.getReservaById(codigoLivro))
 
         if (usuario.getReservaById(codigoLivro)?.getCodigoExemplar()){
-            console.log('ENTREI')
         // Registrar o empréstimo
         const dataAtual = new Date();
         const idExemplar = usuario.getReservaById(codigoLivro)?.getCodigoExemplar();
@@ -155,8 +154,6 @@ export class Biblioteca {
         console.log(`Empréstimo realizado com sucesso: ${usuario.getNome()} pegou "${livro.getTitulo()}"`);
         return;
         }
-
-        console.log('ENTREI SEM RESERVA')
         // Registrar o empréstimo
         const dataAtual = new Date();
         const idExemplar = livro.getExemplar(codigoLivro);
@@ -186,15 +183,13 @@ export class Biblioteca {
     reservar(codigo: number, codigoLivro: number): string | undefined {
         const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo);
         const livro: Livro | undefined = this.encontrarLivroPorId(codigoLivro);
+        
         if (usuario && livro) {
             const reservasDoUsuario = this.reservas.get(usuario.getCodigo()) || [];
-            
-        // Verifica se o usuário já reservou 3 livros (colocar em command)
+  
             if (reservasDoUsuario.length >= 3) {
                 return `Reserva falhou: O usuário ${usuario.getNome()} já possui 3 livros reservados.`;
             }
-    
-            // Verifica se o livro já foi reservado pelo usuário (colocar em command)
             const reservaExistente = reservasDoUsuario.find(reserva => reserva.getCodigoLivro() === livro.getCodigo());
             if (reservaExistente) {
             return `Reserva falhou: O usuário ${usuario.getNome()} já reservou o livro "${livro.getTitulo()}".`;

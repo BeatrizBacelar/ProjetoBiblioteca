@@ -25,7 +25,7 @@ export class Biblioteca {
         return this.instancia;
       }
     
-    encontrarUsuarioPorId(codigo: number) : Usuario | null {
+    encontrarUsuarioPorId(codigo: number) : Usuario | Professor | null {
         return this.usuarios.find(usuario => usuario.getCodigo() === codigo) || null;
     }
 
@@ -72,6 +72,18 @@ export class Biblioteca {
           });
     }
 
+    adicionarObserver(codigo: number, codigoLivro: number) {
+        const usuario: Professor | Usuario | null | any = this.encontrarUsuarioPorId(codigo); 
+        const livro: Livro | undefined = this.encontrarLivroPorId(codigoLivro); 
+        livro?.addObserver(usuario);
+        console.log(`Observador ${usuario.getNome()} para o livro ${livro?.getTitulo()} adicionado com sucesso`);
+    }
+
+    obterQuantidadeNotificacao(codigo: number) {
+        const usuario: Professor | Usuario | null | any = this.encontrarUsuarioPorId(codigo); 
+        console.log(`Quantidade de notificacoes: ` + usuario.getNotificacao());
+    }
+
     consultarUsuario(codigo: number){
         const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo); 
         usuario?.getInfoUsuario();
@@ -82,13 +94,31 @@ export class Biblioteca {
         livro?.getInfoLivro();
     }
 
-    // Emprestar livro
+    devolver(codigo: number, codigoLivro: number) {
+        const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo);
+        const livro: Livro | undefined = this.encontrarLivroPorId(codigoLivro); 
+
+        if (usuario?.getEmprestimoById(codigoLivro)) {
+            const idExemplar = usuario.getEmprestimoById(codigoLivro)?.getCodigoExemplar();
+            livro?.getExemplares().forEach(ex => {
+                if (ex.getCodigo() === idExemplar){
+                    ex.setStatus('disponivel')
+                }
+            });
+            usuario.removeEmprestimoByCodigo(codigoLivro);
+            console.log(`Devolução realizada com sucesso: ${usuario.getNome()} devolveu "${livro?.getTitulo()}"`);
+            console.log('empréstimo: ' + usuario.getEmprestimos().forEach(emp => emp.getCodigoLivro()))
+            return;
+        }
+        console.log(`Insucesso na devolução, não há empréstimo para "${livro?.getTitulo()}"`);
+    }
+
     emprestar(codigo: number, codigoLivro: number): any {
         const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo);
         const livro: Livro | undefined = this.encontrarLivroPorId(codigoLivro);      
 
         if (!usuario || !livro) {
-            return 'Usuário ou livro não encontrado.';
+            return console.log('Usuário ou livro não encontrado.');
         }
 
         if (livro.getExemplar(codigoLivro)){
@@ -114,8 +144,13 @@ export class Biblioteca {
         livro.registrarEmprestimo(idExemplar);
         usuario.removeReserva(usuario.getReservaById(codigoLivro)?.getId())
         usuario.adicionarEmprestimo(emprestimo);
+        livro?.getExemplares().forEach(ex => {
+            if (ex.getCodigo() === idExemplar){
+                ex.setStatus('emprestado')
+            }
+        });
 
-        console.log(usuario.listarEmprestimos())
+        console.log(usuario.getEmprestimos())
 
         console.log(`Empréstimo realizado com sucesso: ${usuario.getNome()} pegou "${livro.getTitulo()}"`);
         return;
@@ -139,30 +174,15 @@ export class Biblioteca {
         livro.registrarEmprestimo(idExemplar);
         usuario.adicionarEmprestimo(emprestimo);
 
-        console.log(usuario.listarEmprestimos())
+        console.log(usuario.getEmprestimos())
 
         console.log(`Empréstimo realizado com sucesso: ${usuario.getNome()} pegou "${livro.getTitulo()}"`);
         return;
         }
 
         console.log(`Não há exemplares de: "${livro.getTitulo()}" na biblioteca`);
-
-
-
-        // Verificar se o empréstimo pode ser feito
-        // const mensagemErro = usuario.podeEmprestar(livro);
-
-        // if (mensagemErro) {
-        //     return `Erro ao realizar o empréstimo: ${mensagemErro}`;
-        // }
-
-        // Verificar se há reserva e removê-la
-        // usuario.removerReserva(codigoLivro);
-
-      
     }
 
-    // Outros métodos para reserva, devolução, etc.
     reservar(codigo: number, codigoLivro: number): string | undefined {
         const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo);
         const livro: Livro | undefined = this.encontrarLivroPorId(codigoLivro);
@@ -188,6 +208,7 @@ export class Biblioteca {
                 reservasDoUsuario.push(novaReserva);
                 usuario.adicionarReserva(novaReserva);
                 this.reservas.set(usuario.getCodigo(), reservasDoUsuario);
+                livro.adicionarReserva(novaReserva);
 
                 //(colocar em command)
                 return `Reserva bem-sucedida: O usuário ${usuario.getNome()} reservou o livro "${livro.getTitulo()}".`;
@@ -196,7 +217,6 @@ export class Biblioteca {
         }
     }
 
-    // Método para obter reservas de um usuário específico
     getReservasPorUsuario(codigoUsuario: number): Reserva[] {
         return this.reservas.get(codigoUsuario) || [];
     }  

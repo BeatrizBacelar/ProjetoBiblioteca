@@ -2,7 +2,7 @@ import { Exemplar } from "./Exemplar";
 import { Reserva } from "./Reserva";
 import { Usuario } from "./Usuario/Usuario";
 
-export class Livro {
+export class Livro extends Observable {
   private exemplares: Exemplar[];
   private reservas: Reserva[];
   private observadores: Usuario[] = [];
@@ -15,6 +15,7 @@ export class Livro {
     private edicao: number,
     private anoPublicacao: number
   ) {
+    super();
     this.exemplares = [];
     this.reservas = [];
   }
@@ -61,6 +62,10 @@ export class Livro {
     ${this.getUsersReserva()} ${this.getInfoExemplar()} `)
   }
 
-  
-
+  public adicionarReserva(novaReserva: Reserva) {
+    this.reservas.push(novaReserva);
+    if (this.reservas.length >= 2){
+      this.notifyObservers();
+    }
+  }
 }

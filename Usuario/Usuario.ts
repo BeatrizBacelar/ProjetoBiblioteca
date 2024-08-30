@@ -14,18 +14,26 @@ export class Usuario {
 	public getNome(): string {
 		return this.nome;
 	}
-	public listarEmprestimos(): Emprestimo[] {
+	public getEmprestimos(): Emprestimo[] {
 		return this.emprestimos;
 	}
 	public adicionarEmprestimo(emprestimo: Emprestimo): void {
 		this.emprestimos.push(emprestimo);
 	}
 
+    public removeEmprestimoByCodigo(codigo: number) {
+        this.emprestimos = this.emprestimos.filter(emp => emp.getCodigoLivro() === codigo);
+    }
+
     public adicionarReserva(reserva: Reserva): void {
 		this.minhasReservas.push(reserva);
 	}
 
     public getTempoEmprestimo(): number { return 0;}
+    
+    public getLimiteEmprestimos(): number {
+        return 0;
+    }
 
     public getMinhasReservas(): Reserva[] {
         return this.minhasReservas;
@@ -35,8 +43,12 @@ export class Usuario {
         return this.minhasReservas.find(res => res.getCodigoLivro() === idLivro);
     }
 
+    public getEmprestimoById(idLivro: number): Emprestimo | undefined {
+        return this.emprestimos.find(emp => emp.getCodigoLivro() === idLivro);
+    }
+
     public removeReserva(idReserva: number | undefined | null) {
-        this.minhasReservas.filter(res => res.getId() === idReserva);
+        this.minhasReservas = this.minhasReservas.filter(res => res.getId() === idReserva);
     }
 
     getInfoEmprestimo() {

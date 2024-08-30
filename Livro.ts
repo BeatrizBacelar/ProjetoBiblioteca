@@ -1,6 +1,7 @@
 import { Exemplar } from "./Exemplar";
 import { Reserva } from "./Reserva";
 import { Usuario } from "./Usuario/Usuario";
+import { Observable } from "./Observer/Observable";
 
 export class Livro extends Observable {
   private exemplares: Exemplar[];
@@ -65,7 +66,7 @@ export class Livro extends Observable {
   public adicionarReserva(novaReserva: Reserva) {
     this.reservas.push(novaReserva);
     if (this.reservas.length >= 2){
-      this.notifyObservers();
+     this.notifyObservers();
     }
   }
 }

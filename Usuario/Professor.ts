@@ -1,4 +1,5 @@
 import { Usuario } from "./Usuario";
+import { Observer } from "../Observer/Observer";
 
 export class Professor extends Usuario implements Observer {
 	private qteNotificado: number = 0;

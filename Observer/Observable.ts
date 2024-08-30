@@ -1,4 +1,5 @@
-class Observable {
+import { Observer } from "./Observer";
+export class Observable {
   private observers: Observer[] = [];
 
   addObserver(observer: Observer): void {

@@ -107,7 +107,7 @@ export class Biblioteca {
         const livro: Livro | undefined = this.encontrarLivroPorId(codigoLivro);      
 
         if (!usuario || !livro) {
-            return 'Usuário ou livro não encontrado.';
+            return console.log('Usuário ou livro não encontrado.');
         }
 
         if (livro.getExemplar(codigoLivro)){

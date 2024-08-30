@@ -30,6 +30,10 @@ export class Usuario {
 	}
 
     public getTempoEmprestimo(): number { return 0;}
+    
+    public getLimiteEmprestimos(): number {
+        return 0;
+    }
 
     public getMinhasReservas(): Reserva[] {
         return this.minhasReservas;

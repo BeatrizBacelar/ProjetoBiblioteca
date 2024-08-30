@@ -14,6 +14,9 @@ export class Emprestimo {
 	private static gerarIdEmprestimo(): number {
     return ++this.contadorIdEmprestimo;
   }
+	public getCodigoExemplar(): number {
+		return this.codigoExemplar;
+	}
 	public getCodigoLivro(): number {
 		return this.codigoLivro;
 	}

@@ -82,6 +82,25 @@ export class Biblioteca {
         livro?.getInfoLivro();
     }
 
+    devolver(codigo: number, codigoLivro: number) {
+        const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo);
+        const livro: Livro | undefined = this.encontrarLivroPorId(codigoLivro); 
+
+        if (usuario?.getEmprestimoById(codigoLivro)) {
+            const idExemplar = usuario.getEmprestimoById(codigoLivro)?.getCodigoExemplar();
+            livro?.getExemplares().forEach(ex => {
+                if (ex.getCodigo() === idExemplar){
+                    ex.setStatus('disponivel')
+                }
+            });
+            usuario.removeEmprestimoByCodigo(codigoLivro);
+            console.log(`Devolução realizada com sucesso: ${usuario.getNome()} devolveu "${livro?.getTitulo()}"`);
+            console.log('empréstimo: ' + usuario.getEmprestimos().forEach(emp => emp.getCodigoLivro()))
+            return;
+        }
+        console.log(`Insucesso na devolução, não há empréstimo para "${livro?.getTitulo()}"`);
+    }
+
     // Emprestar livro
     emprestar(codigo: number, codigoLivro: number): any {
         const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo);
@@ -115,7 +134,7 @@ export class Biblioteca {
         usuario.removeReserva(usuario.getReservaById(codigoLivro)?.getId())
         usuario.adicionarEmprestimo(emprestimo);
 
-        console.log(usuario.listarEmprestimos())
+        console.log(usuario.getEmprestimos())
 
         console.log(`Empréstimo realizado com sucesso: ${usuario.getNome()} pegou "${livro.getTitulo()}"`);
         return;
@@ -139,7 +158,7 @@ export class Biblioteca {
         livro.registrarEmprestimo(idExemplar);
         usuario.adicionarEmprestimo(emprestimo);
 
-        console.log(usuario.listarEmprestimos())
+        console.log(usuario.getEmprestimos())
 
         console.log(`Empréstimo realizado com sucesso: ${usuario.getNome()} pegou "${livro.getTitulo()}"`);
         return;

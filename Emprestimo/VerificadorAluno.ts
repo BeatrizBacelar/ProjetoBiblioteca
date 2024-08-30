@@ -4,6 +4,14 @@ import { IVerificadorEmprestimo } from "./IVerificadorEmprestimo";
 
 export class VerificadorAluno implements IVerificadorEmprestimo {
 
+  verificarReserva(usuario: Usuario, livro: Livro): Boolean {
+    const qteReserva = usuario.getMinhasReservas().length < 3;
+    if (qteReserva){
+      return true;
+    }
+    return false;
+  }
+
   verificarEmprestimo(usuario: Usuario, livro: Livro): Boolean {
     const devedor = usuario.getEmprestimos().find(emp => emp.getDataDevolucao() < new Date());
     const emprestimoAtual = usuario.getEmprestimoById(livro.getCodigo());

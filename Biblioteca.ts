@@ -74,8 +74,14 @@ export class Biblioteca {
 
     adicionarObserver(codigo: number, codigoLivro: number) {
         const usuario: Professor | Usuario | null | any = this.encontrarUsuarioPorId(codigo); 
-        const livro: Livro | undefined = this.encontrarLivroPorId(codigo); 
+        const livro: Livro | undefined = this.encontrarLivroPorId(codigoLivro); 
         livro?.addObserver(usuario);
+        console.log(`Observador ${usuario.getNome()} para o livro ${livro?.getTitulo()} adicionado com sucesso`);
+    }
+
+    obterQuantidadeNotificacao(codigo: number) {
+        const usuario: Professor | Usuario | null | any = this.encontrarUsuarioPorId(codigo); 
+        console.log(`Quantidade de notificacoes: ` + usuario.getNotificacao());
     }
 
     consultarUsuario(codigo: number){

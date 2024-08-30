@@ -133,6 +133,11 @@ export class Biblioteca {
         livro.registrarEmprestimo(idExemplar);
         usuario.removeReserva(usuario.getReservaById(codigoLivro)?.getId())
         usuario.adicionarEmprestimo(emprestimo);
+        livro?.getExemplares().forEach(ex => {
+            if (ex.getCodigo() === idExemplar){
+                ex.setStatus('emprestado')
+            }
+        });
 
         console.log(usuario.getEmprestimos())
 

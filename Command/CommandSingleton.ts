@@ -17,7 +17,6 @@ export class CommandSingleton {
       this.commandMap.set('dev', new DevolucaoCommand());
       this.commandMap.set('liv', new ConsultaLivroCommand());
       this.commandMap.set('usu', new ConsultaUsuarioCommand());
-      this.commandMap.set('dev', new DevolucaoCommand());
       // this.commandMap.set('obs', new DevolucaoCommand());
   }
 

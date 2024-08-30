@@ -4,7 +4,7 @@ import { IVerificadorEmprestimo } from "./IVerificadorEmprestimo";
 
 export class VerificadorAluno implements IVerificadorEmprestimo {
 
-  verificarEmprestimo(usuario: Usuario, livro: Livro): boolean | undefined {
+  verificarEmprestimo(usuario: Usuario, livro: Livro): Boolean {
     const devedor = usuario.getEmprestimos().find(emp => emp.getDataDevolucao() < new Date());
     const emprestimoAtual = usuario.getEmprestimoById(livro.getCodigo());
     const atingiuMaximo = usuario.getEmprestimos().length >= usuario.getLimiteEmprestimos();

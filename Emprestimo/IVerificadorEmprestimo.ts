@@ -4,5 +4,5 @@ import { Usuario } from "../Usuario/Usuario";
 
 export interface IVerificadorEmprestimo {
 
-  verificarEmprestimo(usuario: Usuario, livro: Livro);
+  verificarEmprestimo(usuario: Usuario, livro: Livro) : Boolean;
 }

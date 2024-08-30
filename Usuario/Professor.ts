@@ -1,6 +1,11 @@
 import { Usuario } from "./Usuario";
 
-export class Professor extends Usuario {
+export class Professor extends Usuario implements Observer {
+	qteNotificado: number = 0;
+
+	update(): void {
+		this.qteNotificado++;
+	}
 	private notificacao?: number | null;
     public getNotificacao(): number | null | undefined{
 		return this.notificacao;

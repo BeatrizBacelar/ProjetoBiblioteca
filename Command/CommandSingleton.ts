@@ -3,6 +3,7 @@ import { ConsultaLivroCommand } from "./ConsultaLivroCommand";
 import { ConsultaUsuarioCommand } from "./ConsultaUsuarioCommand";
 import { DevolucaoCommand } from "./DevolucaoCommand";
 import { EmprestimoCommand } from "./EmprestimoCommand";
+import { ObservadorCommand } from "./ObservadorCommand";
 import { ReservaCommand } from "./ReservaCommand";
 
 export class CommandSingleton {
@@ -17,7 +18,7 @@ export class CommandSingleton {
       this.commandMap.set('dev', new DevolucaoCommand());
       this.commandMap.set('liv', new ConsultaLivroCommand());
       this.commandMap.set('usu', new ConsultaUsuarioCommand());
-      // this.commandMap.set('obs', new DevolucaoCommand());
+      this.commandMap.set('obs', new ObservadorCommand());
   }
 
   public static obterInstancia(): CommandSingleton {

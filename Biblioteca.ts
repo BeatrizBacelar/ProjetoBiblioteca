@@ -25,7 +25,7 @@ export class Biblioteca {
         return this.instancia;
       }
     
-    encontrarUsuarioPorId(codigo: number) : Usuario | null {
+    encontrarUsuarioPorId(codigo: number) : Usuario | Professor | null {
         return this.usuarios.find(usuario => usuario.getCodigo() === codigo) || null;
     }
 
@@ -72,6 +72,12 @@ export class Biblioteca {
           });
     }
 
+    adicionarObserver(codigo: number, codigoLivro: number) {
+        const usuario: Professor | Usuario | null | any = this.encontrarUsuarioPorId(codigo); 
+        const livro: Livro | undefined = this.encontrarLivroPorId(codigo); 
+        livro?.addObserver(usuario);
+    }
+
     consultarUsuario(codigo: number){
         const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo); 
         usuario?.getInfoUsuario();
@@ -101,7 +107,6 @@ export class Biblioteca {
         console.log(`Insucesso na devolução, não há empréstimo para "${livro?.getTitulo()}"`);
     }
 
-    // Emprestar livro
     emprestar(codigo: number, codigoLivro: number): any {
         const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo);
         const livro: Livro | undefined = this.encontrarLivroPorId(codigoLivro);      
@@ -170,23 +175,8 @@ export class Biblioteca {
         }
 
         console.log(`Não há exemplares de: "${livro.getTitulo()}" na biblioteca`);
-
-
-
-        // Verificar se o empréstimo pode ser feito
-        // const mensagemErro = usuario.podeEmprestar(livro);
-
-        // if (mensagemErro) {
-        //     return `Erro ao realizar o empréstimo: ${mensagemErro}`;
-        // }
-
-        // Verificar se há reserva e removê-la
-        // usuario.removerReserva(codigoLivro);
-
-      
     }
 
-    // Outros métodos para reserva, devolução, etc.
     reservar(codigo: number, codigoLivro: number): string | undefined {
         const usuario: Usuario | null = this.encontrarUsuarioPorId(codigo);
         const livro: Livro | undefined = this.encontrarLivroPorId(codigoLivro);
@@ -212,6 +202,7 @@ export class Biblioteca {
                 reservasDoUsuario.push(novaReserva);
                 usuario.adicionarReserva(novaReserva);
                 this.reservas.set(usuario.getCodigo(), reservasDoUsuario);
+                livro.adicionarReserva(novaReserva);
 
                 //(colocar em command)
                 return `Reserva bem-sucedida: O usuário ${usuario.getNome()} reservou o livro "${livro.getTitulo()}".`;
@@ -220,7 +211,6 @@ export class Biblioteca {
         }
     }
 
-    // Método para obter reservas de um usuário específico
     getReservasPorUsuario(codigoUsuario: number): Reserva[] {
         return this.reservas.get(codigoUsuario) || [];
     }  
